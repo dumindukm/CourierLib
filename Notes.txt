@@ -1,0 +1,8 @@
+Notes
+
+spend around three hours
+
+1. Implementation done only for first three points.
+2. No exception handle or edge cases consider or input validation done
+3. Didn't create subtypes for parcel as first three tasks not required that abstraction. It's handle with Parcel types
+4. Some values hard coded but can use constants and in tests could use inline data or data collections to feed test data
