@@ -10,7 +10,7 @@ namespace CourierLib.Models
     {
         public decimal ParcelCost { get; internal set; }
         public decimal ShippingFee { get; internal set; }
-
         public decimal TotalFee => ParcelCost+ShippingFee;
+        public List<string> Parcels = new();
     }
 }

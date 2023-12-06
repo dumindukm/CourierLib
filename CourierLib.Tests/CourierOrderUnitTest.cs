@@ -32,7 +32,9 @@ namespace CourierLib.Tests
 
             CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.Normal);
 
-            Assert.Equal(8, courierOrder.CaculateOrderAmount().ParcelCost);
+            var orderAmount = courierOrder.CaculateOrderAmount();
+            Assert.Equal(8, orderAmount.ParcelCost);
+            Assert.Equal(0, orderAmount.ShippingFee);
 
         }
 
@@ -86,5 +88,20 @@ namespace CourierLib.Tests
             Assert.Equal(20, orderAmount.TotalFee);
 
         }
+
+        [Fact]
+        public void OrderTotalParcelCountMustMatchAfterCalculateParcelPrice()
+        {
+            decimal dimension = 10;
+
+            List<Parcel> parcel = new List<Parcel>();
+            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension, 3));
+
+            CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.Normal);
+            var orderAmount = courierOrder.CaculateOrderAmount();
+
+            Assert.Equal(1, orderAmount.Parcels.Count);
+        }
+
     }
 }

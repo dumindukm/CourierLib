@@ -22,6 +22,10 @@ namespace CourierLib.Core
 
         public CourierOrder(List<Parcel> parcels, ShippingTypes shippingType) 
         {
+            if (parcels.Count==0)
+            {
+                throw new InvalidDataException("Order should have atleast one parcel");
+            }
             _Parcels = parcels;
             _shippingType = shippingType;
         }

@@ -17,7 +17,7 @@ namespace CourierLib.Services
             var amount = courierOrder.Parcels.Sum(x => x.GetPrice());
 
             orderAmount.ParcelCost = amount;
-
+            orderAmount.Parcels.AddRange(courierOrder.Parcels.Select(x => x.ToString()));
             return orderAmount;
         }
     }

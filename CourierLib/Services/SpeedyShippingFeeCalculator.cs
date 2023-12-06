@@ -17,6 +17,7 @@ namespace CourierLib.Services
 
             orderAmount.ParcelCost = amount;
             orderAmount.ShippingFee = orderAmount.ParcelCost;
+            orderAmount.Parcels.AddRange(courierOrder.Parcels.Select(x => x.ToString()));
             return orderAmount;
         }
     }
