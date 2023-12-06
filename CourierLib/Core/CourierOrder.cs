@@ -1,4 +1,5 @@
 ﻿using CourierLib.Models;
+using CourierLib.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +33,10 @@ namespace CourierLib.Core
         }
         public OrderAmount CaculateOrderAmount()
         {
-            OrderAmount orderAmount = new OrderAmount();
-            var amount = Parcels.Sum(x => x.GetPrice());
+            IShippingFeeCalculator shippingFeeCalculator = _shippingType == ShippingTypes.SpeedyShipping ?
+                                                            new SpeedyShippingFeeCalculator() : new NormalShippingFeeCalculator();
 
-            orderAmount.ParcelCost = amount ;
-            orderAmount.ShippingFee = (_shippingType == ShippingTypes.SpeedyShipping ? amount : 0);
-
-            return orderAmount;
+            return shippingFeeCalculator.CaculateOrderAmount(this);
         }
     }
 }

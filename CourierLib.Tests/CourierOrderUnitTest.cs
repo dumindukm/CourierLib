@@ -15,7 +15,7 @@ namespace CourierLib.Tests
             decimal dimension = 10;
 
             List<Parcel> parcel = new List<Parcel>();
-            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension));
+            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension,3));
 
             CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.Normal);
 
@@ -28,7 +28,7 @@ namespace CourierLib.Tests
             decimal dimension = 10;
 
             List<Parcel> parcel = new List<Parcel>();
-            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension));
+            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension,3));
 
             CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.Normal);
 
@@ -42,7 +42,7 @@ namespace CourierLib.Tests
             decimal dimension = 10;
 
             List<Parcel> parcel = new List<Parcel>();
-            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension));
+            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension, 3));
 
             CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.SpeedyShipping);
 
@@ -50,6 +50,40 @@ namespace CourierLib.Tests
             Assert.Equal(8, orderAmount.ParcelCost);
             Assert.Equal(8, orderAmount.ShippingFee);
             Assert.Equal(16, orderAmount.TotalFee);
+
+        }
+
+        [Fact]
+        public void OrderAmountShouldEqualToIndividualParcelPriceSumWithExtraWeight()
+        {
+            decimal dimension = 10;
+
+            List<Parcel> parcel = new List<Parcel>();
+            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension, 4));
+
+            CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.Normal);
+
+            var orderAmount = courierOrder.CaculateOrderAmount();
+            Assert.Equal(8 + 2, orderAmount.ParcelCost);
+            Assert.Equal(0, orderAmount.ShippingFee);
+            Assert.Equal(10, orderAmount.TotalFee);
+
+        }
+
+        [Fact]
+        public void OrderAmountSholdMatchWithSpeedyShippingAndOverWeight()
+        {
+            decimal dimension = 10;
+
+            List<Parcel> parcel = new List<Parcel>();
+            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension, 4));
+
+            CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.SpeedyShipping);
+
+            var orderAmount = courierOrder.CaculateOrderAmount();
+            Assert.Equal(8+2, orderAmount.ParcelCost);
+            Assert.Equal(8+2, orderAmount.ShippingFee);
+            Assert.Equal(20, orderAmount.TotalFee);
 
         }
     }

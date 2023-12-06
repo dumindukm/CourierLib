@@ -9,7 +9,7 @@ namespace CourierLib.Tests
         {
             decimal dimension = 10;
             ParcelType parcelType = ParcelType.Create(dimension);
-            Parcel parcel = Parcel.Create(parcelType , dimension);
+            Parcel parcel = Parcel.Create(parcelType , dimension,4);
 
             Assert.NotNull(parcel);
         }
@@ -19,7 +19,7 @@ namespace CourierLib.Tests
         {
             decimal dimension = 10;
             ParcelType parcelType = ParcelType.Create(dimension);
-            Parcel parcel = Parcel.Create(parcelType, dimension);
+            Parcel parcel = Parcel.Create(parcelType, dimension,4);
 
             Assert.Equal(dimension, parcel.Dimension);
             Assert.NotNull(parcel.ParcelType);
