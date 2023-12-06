@@ -21,5 +21,19 @@ namespace CourierLib.Tests
 
             Assert.NotEmpty(courierOrder.Parcels);
         }
+
+        [Fact]
+        public void OrderAmountShouldEqualToIndividualParcelPriceSum()
+        {
+            decimal dimension = 10;
+
+            List<Parcel> parcel = new List<Parcel>();
+            parcel.Add(Parcel.Create(ParcelType.Create(dimension), dimension));
+
+            CourierOrder courierOrder = CourierOrder.Create(parcel);
+
+            Assert.Equal(8, courierOrder.CaculateOrderAmount().Total);
+
+        }
     }
 }

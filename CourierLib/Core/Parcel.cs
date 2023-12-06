@@ -14,5 +14,9 @@
         {
             return new Parcel(parcelType , dimension);
         }
+        public decimal GetPrice()
+        {
+            return ParcelType.Price;
+        }
     }
 }
