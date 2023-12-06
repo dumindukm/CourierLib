@@ -8,6 +8,9 @@ namespace CourierLib.Models
 {
     public class OrderAmount
     {
-        public decimal Total { get; internal set; }
+        public decimal ParcelCost { get; internal set; }
+        public decimal ShippingFee { get; internal set; }
+
+        public decimal TotalFee => ParcelCost+ShippingFee;
     }
 }

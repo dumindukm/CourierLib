@@ -35,7 +35,8 @@ namespace CourierLib.Core
             OrderAmount orderAmount = new OrderAmount();
             var amount = Parcels.Sum(x => x.GetPrice());
 
-            orderAmount.Total = amount + (_shippingType == ShippingTypes.SpeedyShipping ? amount : 0);
+            orderAmount.ParcelCost = amount ;
+            orderAmount.ShippingFee = (_shippingType == ShippingTypes.SpeedyShipping ? amount : 0);
 
             return orderAmount;
         }

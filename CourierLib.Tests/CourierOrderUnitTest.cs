@@ -32,7 +32,7 @@ namespace CourierLib.Tests
 
             CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.Normal);
 
-            Assert.Equal(8, courierOrder.CaculateOrderAmount().Total);
+            Assert.Equal(8, courierOrder.CaculateOrderAmount().ParcelCost);
 
         }
 
@@ -46,7 +46,10 @@ namespace CourierLib.Tests
 
             CourierOrder courierOrder = CourierOrder.Create(parcel, ShippingTypes.SpeedyShipping);
 
-            Assert.Equal(8*2, courierOrder.CaculateOrderAmount().Total);
+            var orderAmount = courierOrder.CaculateOrderAmount();
+            Assert.Equal(8, orderAmount.ParcelCost);
+            Assert.Equal(8, orderAmount.ShippingFee);
+            Assert.Equal(16, orderAmount.TotalFee);
 
         }
     }
