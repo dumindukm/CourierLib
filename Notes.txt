@@ -6,3 +6,5 @@ spend around three hours
 2. No exception handle or edge cases consider or input validation done
 3. Didn't create subtypes for parcel as first three tasks not required that abstraction. It's handle with Parcel types
 4. Some values hard coded but can use constants and in tests could use inline data or data collections to feed test data
+5. Considering future needs, factory class will need to ecide which calculator should be used to calculate order amount
+6. May be it's seems better to introduce base class for price calculation as well
