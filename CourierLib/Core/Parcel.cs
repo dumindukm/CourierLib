@@ -2,36 +2,32 @@
 
 namespace CourierLib.Core
 {
-    public class Parcel
+    public abstract class Parcel
     {
         public Guid Id { get; private set; }
         public Decimal Weight { get; set; }
         public Decimal Dimension { get; set; }
-        public ParcelType ParcelType { get; set; }
 
-        private decimal _price = 0;
-        private Parcel(ParcelType parcelType,decimal dimension, decimal weight )
+        protected decimal _price = 0;
+        protected decimal _defaultWeight = 0;
+        protected Parcel( decimal dimension, decimal weight, decimal price, decimal defaultWeight)
         {
             Id = Guid.NewGuid();
-            ParcelType = parcelType;
             Dimension = dimension;
             Weight = weight;
-            CalculatePrice();
-        }
-
-        public static Parcel Create(ParcelType parcelType, decimal dimension, decimal weight)
-        {
-            return new Parcel(parcelType,dimension,weight);
+            _price = price;
+            _defaultWeight = defaultWeight;
         }
 
         public decimal GetPrice()
         {
+            CalculatePrice();
             return _price;
         }
 
-        public decimal CalculatePrice()
+        public virtual decimal CalculatePrice()
         {
-            _price = ParcelType.Price + (ParcelType.MaxWeight<= Weight ? (Weight - ParcelType.MaxWeight) * 2 :0 );
+            _price = _price + (_defaultWeight <= Weight ? (Weight - _defaultWeight) * 2 :0 );
             return _price;
         }
 

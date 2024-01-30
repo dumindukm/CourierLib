@@ -1,4 +1,5 @@
-﻿using CourierLib.Models;
+﻿using CourierLib.Factories;
+using CourierLib.Models;
 using CourierLib.Services;
 using System;
 using System.Collections.Generic;
@@ -20,27 +21,29 @@ namespace CourierLib.Core
 
         public IList<Parcel> Parcels { get { return _Parcels.AsReadOnly(); } }
 
-        public CourierOrder(List<Parcel> parcels, ShippingTypes shippingType) 
+
+        private CourierOrder(ShippingTypes shippingType)
         {
-            if (parcels.Count==0)
-            {
-                throw new InvalidDataException("Order should have atleast one parcel");
-            }
-            _Parcels = parcels;
             _shippingType = shippingType;
         }
 
-        public static CourierOrder Create(List<Parcel> parcel, ShippingTypes shippingType)
-        {
-            var courierOrder = new CourierOrder(parcel, shippingType);
-            return courierOrder;
-        }
         public OrderAmount CaculateOrderAmount()
         {
             IShippingFeeCalculator shippingFeeCalculator = _shippingType == ShippingTypes.SpeedyShipping ?
                                                             new SpeedyShippingFeeCalculator() : new NormalShippingFeeCalculator();
 
             return shippingFeeCalculator.CaculateOrderAmount(this);
+        }
+
+        public static CourierOrder Create(ShippingTypes shippingType)
+        {
+            var courierOrder = new CourierOrder( shippingType);
+            return courierOrder;
+        }
+
+        public void AddParcel(ParcelDto parcelDto)
+        {
+            _Parcels.Add(ParcelFactory.Create(parcelDto));
         }
     }
 }

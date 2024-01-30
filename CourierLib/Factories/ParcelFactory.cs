@@ -1,4 +1,5 @@
 ﻿using CourierLib.Core;
+using CourierLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +10,28 @@ namespace CourierLib.Factories
 {
     public class ParcelFactory
     {
-        //public static Parcel Create(decimal dimension, decimal price)
-        //{
-        //    Parcel  parcel ;
-        //    if (dimension < 10)
-        //    {
-        //        parcel = new ParcelType(9, 3,1);
-        //    }
-        //    else if (dimension < 50)
-        //    {
-        //        parcel = new ParcelType(49, 8,3);
-        //    }
-        //    else if (dimension < 100)
-        //    {
-        //        parcel = new ParcelType(99, 15,6);
-        //    }
-        //    else
-        //    {
-        //        parcel = new ParcelType(1000, 25,10); // Assume there is a max size for a parcel
-        //    }
+        public static Parcel Create(ParcelDto parcelDto)
+        {
+            Parcel parcel;
+            if (parcelDto.Dimension < 10)
+            {
+                parcel = new SmallParcel(parcelDto.Dimension, parcelDto.Weight, parcelDto.Price, parcelDto.DefaultWeight);
+            }
+            else if (parcelDto.Dimension < 50)
+            {
+                parcel = new MediumParcel(parcelDto.Dimension, parcelDto.Weight, parcelDto.Price, parcelDto.DefaultWeight);
+            }
+            else if (parcelDto.Dimension < 100)
+            {
+                parcel = new LargeParcel(parcelDto.Dimension, parcelDto.Weight, parcelDto.Price, parcelDto.DefaultWeight);
+            }
+            else
+            {
+                parcel = new XlParcel(parcelDto.Dimension, parcelDto.Weight, parcelDto.Price,parcelDto.DefaultWeight); // Assume there is a max size for a parcel
+            }
 
-        //    return parcel;
-        //}
+            return parcel;
+
+        }
     }
 }

@@ -1,4 +1,6 @@
 using CourierLib.Core;
+using CourierLib.Factories;
+using CourierLib.Tests.UnitTestData;
 
 namespace CourierLib.Tests
 {
@@ -9,7 +11,7 @@ namespace CourierLib.Tests
         {
             decimal dimension = 10;
             ParcelType parcelType = ParcelType.Create(dimension);
-            Parcel parcel = Parcel.Create(parcelType , dimension,4);
+            Parcel parcel = ParcelFactory.Create(ParcelTestData.smallParcelDto);
 
             Assert.NotNull(parcel);
         }
@@ -17,12 +19,9 @@ namespace CourierLib.Tests
         [Fact]
         public void ParcelCreateWithTypeAndDimension()
         {
-            decimal dimension = 10;
-            ParcelType parcelType = ParcelType.Create(dimension);
-            Parcel parcel = Parcel.Create(parcelType, dimension,4);
+            Parcel parcel = ParcelFactory.Create(ParcelTestData.smallParcelDto);
 
-            Assert.Equal(dimension, parcel.Dimension);
-            Assert.NotNull(parcel.ParcelType);
+            Assert.Equal(ParcelTestData.smallParcelDto.Dimension, parcel.Dimension);
         }
 
 
